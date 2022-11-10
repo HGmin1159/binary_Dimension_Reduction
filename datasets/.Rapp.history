@@ -1,0 +1,271 @@
+rownames(x) <- c("a","b","c")
+rownames(x)[which(x[,1] %in% c(1,2))]
+rownames(x)[x[,1] %in% c(1,2)]
+x[,1] %in% c(1,2)
+?rank
+library(beeswarm)
+beeswarm(x=-log10(rep(1:10)), main="Alpha Diversity",#
+			ylab="Effect Size", pwpch=rep(23,length(unlist(cols))), pwcol=unlist(cols), pwbg=unlist(cols))#
+legend("topright", legend = c("Yes", "No"), pch = pch , col = 1:2)
+beeswarm(x=(rep(1:10)), main="Alpha Diversity",#
+			ylab="Effect Size", pwpch=rep(23,length(unlist(cols))), pwcol=unlist(cols), pwbg=unlist(cols))#
+legend("topright", legend = c("Yes", "No"), pch = pch , col = 1:2)
+beeswarm(x=(rep(1:10)), main="Alpha Diversity")
+line(1)
+abline(h=2)
+beeswarm(x=(rep(1:10)), main="Alpha Diversity")
+abline(h=2, lty=2)
+?wilcox.test
+?lm
+test <- cbind(1:2,1:2)
+rownames(test) <- "#S"
+rownames(test) <- c("#S", "1")
+test
+?abline
+x <- 1 > 3
+x
+x <- 5 > 3
+x
+class(x)
+pwr.anova.test()
+library(pwr)
+?pwr.anova.test()
+pwr.anova.test(2, f=-0.0334525, sig.level=0.05, power=.80)
+pwr.anova.test(2, f=0.0334525, sig.level=0.05, power=.80)
+pwr.anova.test(2, f=0.1555, sig.level=0.05, power=.80)
+pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.1554/.0107)
+pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.03345/.00928)
+pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=..03/.001)
+pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=..03/.003)
+pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.03/.003)
+pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.007/.001)
+pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.145/.02)
+pwr.t.test(sig.level=0.05, power=.80, type="two.sample", d=.001746/.0002)
+.03345/.00928
+?Sys.geten
+?Sys.getenv
+library(optparse)
+install.packages("optparse")
+library(optparse)
+?hclust
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/bin/load.r")
+dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:15])
+use.rare=FALSE
+source("/Users/pvangay/Dropbox/UMN/KnightsLab/IMP/ANALYSES/analysis/bin/load.r")
+dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:15])
+dm <- wuf_dm[cs,cs] # best to use unifrac hereddm <- as.dist(dm)pc <- cmdscale(ddm,2)map0 <- map[cs,]bd <- betadisper(ddm, map0$Sample.Group)centroid.dist <- bd$distances # distances of all samples to their group centroids!hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:20])
+hmong1
+hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:18])
+hmong1
+o.hmong.1 <- map0[hmong1,c("Age","BMI")]
+o.hmong.1
+sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 30 & map0$Sample.Group=="Hmong1st"]])[1:18]
+bp2 <- plot.b.p.ratio(map0[hmong1,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="hmong1.b.p.ratio.pdf")
+getwd()
+map0[c("CS.347.0", "CS.164", "CS.228"),c("Age","BMI")]
+d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- c(alpha(wes_palette(n=5, name="Moonrise3"), .8))p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)
+d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- get.group.colors(groups=as.character(levels(d$group)), alpha.val=.8)p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)
+p
+p <- p + geom_text(data = d[hmong1, ], aes(label=hmong1) ,hjust=0, vjust=0, size=3)
+p
+hmongthai <- names(sort(centroid.dist[rownames(map0)[map0$Sample.Group=="HmongThai"]])[1:15])
+hmongthai
+hmong1 <- names(sort(centroid.dist[rownames(map0)[map0$Sub.Study=="CS" & map0$Years.in.US > 29 & map0$Sample.Group=="Hmong1st"]]))
+hmong1
+sort(map0[hmong1,"Years.in.US"])
+sort(map0[hmong1,"Years.in.US", drop=F])
+x <- map0[hmong1,"Years.in.US", drop=F]
+x[order(x[,1]),]
+x
+x[order(x[,1]),,drop=F]
+rownames(x[order(x[,1]),,drop=F])[1:5]
+maybes <- rownames(x[order(x[,1]),,drop=F])[1:5]
+maybes
+map0[maybes,c("Age","BMI")]
+bp2 <- plot.b.p.ratio(map0[hmong1,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="hmong1.b.p.ratio.pdf")
+d <- data.frame(x = pc[,1], y = pc[,2], group=map0$Sample.Group, distance=substring(as.character(centroid.dist[rownames(map0)]),1,4))# set the levels of Sample.Group so that it's the same every timed$group <- factor(d$group, levels=sort(as.character(unique(d$group))))group.cols <- get.group.colors(groups=as.character(levels(d$group)), alpha.val=.8)p <- ggplot(data=d, aes(x, y)) + geom_point(colour=alpha("gray",.5), size=2) +    scale_color_manual(values=group.cols) + #sets the color palette of the fill    stat_ellipse(data=d, aes(colour=group), show.legend=T, type="t", level=.6)# label points by distances#p <- p + geom_text(data = d[hmong1, ], aes(label=distance) ,hjust=0, vjust=0, size=3)# label points by sample namep <- p + geom_text(data = d[hmong1, ], aes(label=hmong1) ,hjust=0, vjust=0, size=3)
+p
+bp["CS.388",]
+bp <- plot.b.p.ratio(map0[cs,], taxa, bug1=bacteroides, bug2=prevotella, outputfn="temp.b.p.ratio.pdf")
+bp["CS.388",]
+dim(bp)
+class(bp)
+mybp <- get.taxa.ratio(prevotella,bacteroides)
+mybp <- get.taxa.ratio(taxa,prevotella,bacteroides)
+mylogbp <- log10(mybp)
+mylogbp["CS.388"]
+plot(mylogbp[hmong1], map0[hmong1,"Years.in.US"])
+plot(map0[hmong1,"Years.in.US"],mylogbp[hmong1])
+mybp <- get.taxa.ratio(taxa,bacteroides, prevotella)
+mylogbp <- log10(mybp)
+plot(map0[hmong1,"Years.in.US"],mylogbp[hmong1])
+mylogbp["CS.388"]
+mylogbp["CS.135"]
+mylogbp["CS.222"]
+?pam
+sessionInfo()
+x <- na
+x <- NA
+as.numeric(strsplit(x))
+as.numeric(strsplit(x,","))
+x <- NULL
+as.numeric(strsplit(x,","))
+length(x)
+setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/MLRepo/datasets")# overwrite the colnameswrite.mapping <- function(filename, map){    if(ncol(map)==1)  header <- "#SampleID\tVar\n"    else if(ncol(map)==2)  header <- "#SampleID\tVar\tControlVar\n"    else stop("Number of mapping file columns not supported")#
+    cat(header, file=filename)    write.table(map, file=filename, sep="\t", quote=F, col.names=F, append=T)}load.data <- function(mapfile, otufile){    m <- read.table(mapfile, sep="\t", comment="", head=T, row=1, quote="", as.is=T)    o <- read.table(otufile, sep="\t", comment="", head=T, row=1, check.names=F)        return(list(m=m, o=o))}filter.data <- function(m, o, min.depth=1000){    o <- o[,colSums(o) > min.depth] # drop low depth samples         valid <- intersect(colnames(o), rownames(m))    m <- m[valid,]    return(list(m=m, o=o))}
+ret <- load.data("ravel/mapping-orig.txt", "ravel/gg/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o
+head(m)
+dim(m)
+length(unique(m$Subject.ID))
+table(m$Ethnic_Group)
+table(m$Nugent_score_category)
+104+96
+104+95
+setwd('/Users/pvangay/Dropbox/UMN/KnightsLab/MLRepo')
+require(pROC)require(reshape)require(ggplot2)require(cowplot)
+#plot.roc.obj(ret$rocs, rown=6, coln=4, main=ret$mains)
+length(ret$rocs)
+plot.roc.obj(ret$rocs, rown=6, coln=4, main=ret$mains)
+source('./lib/cross.validation.r')source('./lib/collapse-features.r')source('./lib/task.sweep.r')
+plot.roc.obj(ret$rocs, rown=6, coln=4, main=ret$mains)
+plot.roc.obj <- function(rocs, rown, coln, main, outputfn="roc.pdf"){    cols <- alpha(c("#d80056", "#5cb8d7", "#ff8c01"), .7)    names(cols) <- c("RF", "SVMR", "SVML")    pdf(outputfn, width=15, height=15)    par(mfrow=c(rown, coln))    for(i in 1:length(rocs))    {        par(pty="s")        plot(rocs[[i]]$RF, main=main[i], legacy.axis=T, col=cols["RF"], lwd=5, xlab="", ylab="")        plot(rocs[[i]]$SVMR, legacy.axis=T, add=T, col=cols["SVMR"], lwd=5)        plot(rocs[[i]]$SVML, legacy.axis=T, add=T, col=cols["SVML"], lwd=5)        legend("bottomright", legend=rocs[[i]]$AUC, text.col = cols[names(rocs[[i]]$AUC)], bty="n", pt.cex = 1, cex=1.5)    }    # plot legend only        plot(rocs[[i]]$RF, axes=FALSE, xlab="", ylab="", type="n", identity.col="white")    legend("center", legend=c("Random Forest","SVM Radial","SVM Linear"), text.col = cols, bty="n", pt.cex=1, cex = 1.65)    dev.off()}
+plot.roc.obj(ret$rocs, rown=6, coln=4, main=ret$mains)
+?alpha
+plot.roc.obj <- function(rocs, rown, coln, main, outputfn="roc.pdf"){    cols <- c("#d80056", "#5cb8d7", "#ff8c01")    names(cols) <- c("RF", "SVMR", "SVML")    cols_trans <- alpha(cols, .7)    names(cols_trans) <- c("RF", "SVMR", "SVML")    pdf(outputfn, width=15, height=15)    par(mfrow=c(rown, coln))    for(i in 1:length(rocs))    {        par(pty="s")        plot(rocs[[i]]$RF, main=main[i], legacy.axis=T, col=cols_trans["RF"], lwd=5, xlab="", ylab="")        plot(rocs[[i]]$SVMR, legacy.axis=T, add=T, col=cols_trans["SVMR"], lwd=5)        plot(rocs[[i]]$SVML, legacy.axis=T, add=T, col=cols_trans["SVML"], lwd=5)        legend("bottomright", legend=rocs[[i]]$AUC, text.col = cols[names(rocs[[i]]$AUC)], bty="n", pt.cex = 1, cex=1.5)    }    # plot legend only        plot(rocs[[i]]$RF, axes=FALSE, xlab="", ylab="", type="n", identity.col="white")    legend("center", legend=c("Random Forest","SVM Radial","SVM Linear"), text.col = cols, bty="n", pt.cex=1, cex = 1.65)    dev.off()}
+plot.roc.obj(ret$rocs, rown=6, coln=4, main=ret$mains)
+plot.roc.obj <- function(rocs, rown, coln, main, outputfn="roc.pdf"){    cols <- c("#d80056", "#5cb8d7", "#ff8c01")    names(cols) <- c("RF", "SVMR", "SVML")    cols_trans <- alpha(cols, .7)    names(cols_trans) <- c("RF", "SVMR", "SVML")    pdf(outputfn, width=15, height=15)    par(mfrow=c(rown, coln))    for(i in 1:length(rocs))    {        par(pty="s")        plot(rocs[[i]]$RF, main=main[i], legacy.axis=T, col=cols_trans["RF"], lwd=5, xlab="", ylab="")        plot(rocs[[i]]$SVMR, legacy.axis=T, add=T, col=cols_trans["SVMR"], lwd=4)        plot(rocs[[i]]$SVML, legacy.axis=T, add=T, col=cols_trans["SVML"], lwd=3)        legend("bottomright", legend=rocs[[i]]$AUC, text.col = cols[names(rocs[[i]]$AUC)], bty="n", pt.cex = 1, cex=1.5)    }    # plot legend only        plot(rocs[[i]]$RF, axes=FALSE, xlab="", ylab="", type="n", identity.col="white")    legend("center", legend=c("Random Forest","SVM Radial","SVM Linear"), text.col = cols, bty="n", pt.cex=1, cex = 1.65)    dev.off()}
+plot.roc.obj(ret$rocs, rown=6, coln=4, main=ret$mains)
+setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/MLRepo/datasets")# overwrite the colnameswrite.mapping <- function(filename, map){    if(ncol(map)==1)  header <- "#SampleID\tVar\n"    else if(ncol(map)==2)  header <- "#SampleID\tVar\tControlVar\n"    else stop("Number of mapping file columns not supported")#
+    cat(header, file=filename)    write.table(map, file=filename, sep="\t", quote=F, col.names=F, append=T)}load.data <- function(mapfile, otufile){    m <- read.table(mapfile, sep="\t", comment="", head=T, row=1, quote="", as.is=T)    o <- read.table(otufile, sep="\t", comment="", head=T, row=1, check.names=F)        return(list(m=m, o=o))}filter.data <- function(m, o, min.depth=1000){    o <- o[,colSums(o) > min.depth] # drop low depth samples         valid <- intersect(colnames(o), rownames(m))    m <- m[valid,]    return(list(m=m, o=o))}
+ret <- load.data("ravel/mapping-orig.txt", "ravel/gg/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o
+head(m)
+m[m$Ethnic_Group %in% c("White", "Black"),]
+m[m$Ethnic_Group %in% c("White", "Black"), ]
+rownames(m)[m$Ethnic_Group %in% c("White", "Black")]
+rownames(m)[m$Ethnic_Group %in% c("White", "Black"), "Ethnic_Group"]
+m[m$Ethnic_Group %in% c("White", "Black"), "Ethnic_Group"]
+m[m$Ethnic_Group %in% c("White", "Black"), "Ethnic_Group", drop=F]
+write.mapping("ravel/task-white-black.txt", m[m$Ethnic_Group %in% c("White", "Black"), "Ethnic_Group", drop=F])
+write.mapping("ravel/task-black-hispanic.txt", m[m$Ethnic_Group %in% c("Black", "Hispanic"), "Ethnic_Group", drop=F])
+head(m)
+dim(m)
+dim(m[m$Nugent_score_category %in% c("low", "high"), ])
+write.mapping("ravel/task-nugent-category.txt", dim(m[m$Nugent_score_category %in% c("low", "high"), "Nugent_score_category", drop=F])#
+    write.mapping("ravel/task-nugent-score.txt", dim(m[, "Nugent_score", drop=F])    #
+    write.mapping("ravel/task-ph.txt", dim(m[, "pH", drop=F])
+write.mapping("ravel/task-nugent-category.txt", m[m$Nugent_score_category %in% c("low", "high"), "Nugent_score_category", drop=F])#
+    write.mapping("ravel/task-nugent-score.txt", m[, "Nugent_score", drop=F])    #
+    write.mapping("ravel/task-ph.txt", m[, "pH", drop=F])
+write.mapping("ravel/task-nugent-category.txt", m[m$Nugent_score_category %in% c("low", "high"), "Nugent_score_category", drop=F])#
+    write.mapping("ravel/task-nugent-score.txt", m[, "Nugent_score", drop=F])    #
+    write.mapping("ravel/task-ph.txt", m[, "pH", drop=F])
+setwd('/Users/pvangay/Dropbox/UMN/KnightsLab/MLRepo')
+require(pROC)require(reshape)require(ggplot2)require(cowplot)plot.rocs <- function(rocs, rown, coln, main, outputfn="roc.pdf"){    cols <- c("#d80056", "#5cb8d7", "#ff8c01")    names(cols) <- c("RF", "SVMR", "SVML")    cols_trans <- alpha(cols, .7)    names(cols_trans) <- c("RF", "SVMR", "SVML")    pdf(outputfn, width=15, height=15)    par(mfrow=c(rown, coln))    for(i in 1:length(rocs))    {        par(pty="s")        plot(rocs[[i]]$RF, main=main[i], legacy.axis=T, col=cols_trans["RF"], lwd=5, xlab="", ylab="")        plot(rocs[[i]]$SVMR, legacy.axis=T, add=T, col=cols_trans["SVMR"], lwd=4)        plot(rocs[[i]]$SVML, legacy.axis=T, add=T, col=cols_trans["SVML"], lwd=3)        legend("bottomright", legend=rocs[[i]]$AUC, text.col = cols[names(rocs[[i]]$AUC)], bty="n", pt.cex = 1, cex=1.5)    }    # plot legend only        plot(rocs[[i]]$RF, axes=FALSE, xlab="", ylab="", type="n", identity.col="white")    legend("center", legend=c("Random Forest","SVM Radial","SVM Linear"), text.col = cols, bty="n", pt.cex=1, cex = 1.65)    dev.off()}
+plot.roc.obj(ret$rocs, rown=6, coln=4, main=ret$mains, outputfn="rocs.n1.pdf")
+plot.rocs(ret$rocs, rown=6, coln=4, main=ret$mains, outputfn="rocs.n1.pdf")
+plot.rocs(ret1$rocs, rown=6, coln=4, main=ret1$mains)
+length(ret$Rocs)
+length(ret$rocs)
+length(ret1$rocs)
+ret1$mains
+gsub("\\"","",ret1$mains)
+gsub("\"","",ret1$mains)
+ret1$mains <- gsub("\"","",ret1$mains)
+plot.rocs(ret1$rocs, rown=6, coln=4, main=ret1$mains)
+setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/MLRepo/datasets")# overwrite the colnameswrite.mapping <- function(filename, map){    if(ncol(map)==1)  header <- "#SampleID\tVar\n"    else if(ncol(map)==2)  header <- "#SampleID\tVar\tControlVar\n"    else stop("Number of mapping file columns not supported")#
+    cat(header, file=filename)    write.table(map, file=filename, sep="\t", quote=F, col.names=F, append=T)}load.data <- function(mapfile, otufile){    m <- read.table(mapfile, sep="\t", comment="", head=T, row=1, quote="", as.is=T)    o <- read.table(otufile, sep="\t", comment="", head=T, row=1, check.names=F)        return(list(m=m, o=o))}filter.data <- function(m, o, min.depth=1000){    o <- o[,colSums(o) > min.depth] # drop low depth samples         valid <- intersect(colnames(o), rownames(m))    m <- m[valid,]    return(list(m=m, o=o))}
+ret <- load.data("karlsson/mapping-orig.txt", "karlsson/otutable.txt")    sort(colSums(ret$o), decreasing=T)
+ret <- load.data("karlsson/mapping-orig.txt", "karlsson/otutable.txt")    sort(colSums(ret$o), decreasing=T)
+ret <- load.data("karlsson/mapping-orig.txt", "karlsson/otutable.txt")    sort(colSums(ret$o), decreasing=T)
+m <- read.table("karlsson/mapping-orig.txt", sep="\t", comment="", head=T, row=1, quote="", as.is=T)
+o <- read.table("karlsson/otutable.txt", sep="\t", comment="", head=T, row=1, check.names=F)
+o <- read.table("karlsson/otutable.txt", sep="\t", comment="", head=T, row=1, check.names=F, quote="")
+load.data <- function(mapfile, otufile){    m <- read.table(mapfile, sep="\t", comment="", head=T, row=1, quote="", as.is=T)    o <- read.table(otufile, sep="\t", comment="", head=T, row=1, quote="", check.names=F)        return(list(m=m, o=o))}
+ret <- load.data("karlsson/mapping-orig.txt", "karlsson/otutable.txt")    sort(colSums(ret$o), decreasing=T)
+ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o
+head(m)
+table(m$Classification)
+dim(m)
+require(pROC)require(reshape)require(ggplot2)require(cowplot)
+setwd('/Users/pvangay/Dropbox/UMN/KnightsLab/MLRepo')
+load("rocs.n100.RData")
+source('./bin/plot.rocs.r')
+length(ret100$rocs)
+plot.rocs(ret100$rocs, rown=6, coln=4, main=ret100$mains)
+setwd("/Users/pvangay/Dropbox/UMN/KnightsLab/MLRepo/datasets")# overwrite the colnameswrite.mapping <- function(filename, map){    if(ncol(map)==1)  header <- "#SampleID\tVar\n"    else if(ncol(map)==2)  header <- "#SampleID\tVar\tControlVar\n"    else stop("Number of mapping file columns not supported")#
+    cat(header, file=filename)    write.table(map, file=filename, sep="\t", quote=F, col.names=F, append=T)}load.data <- function(mapfile, otufile){    m <- read.table(mapfile, sep="\t", comment="", head=T, row=1, quote="", as.is=T)    o <- read.table(otufile, sep="\t", comment="", head=T, row=1, quote="", check.names=F)        return(list(m=m, o=o))}filter.data <- function(m, o, min.depth=1000){    o <- o[,colSums(o) > min.depth] # drop low depth samples         valid <- intersect(colnames(o), rownames(m))    m <- m[valid,]    return(list(m=m, o=o))}
+ret <- load.data("karlsson/mapping-orig.txt", "karlsson/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o
+dim(m)
+head(m)
+table(m$Classification)
+table(m$Country_of_birth)
+write.mapping("karlsson/task-normal-diabetes", m[m$Classification %in% c("NGT", "T2D"), "Classification", drop=F])
+dim(m[m$Classification %in% c("NGT", "T2D"), "Classification", drop=F])
+dim(m[m$Classification %in% c("IGT", "T2D"), "Classification", drop=F])
+write.mapping("karlsson/task-impaired-diabetes", m[m$Classification %in% c("IGT", "T2D"), "Classification", drop=F])
+ret <- load.data("qin2012/mapping-orig.txt", "qin2012/otutable.txt")
+ret <- load.data("qin2012/mapping-orig.txt", "qin2012/otutable.txt")
+ret <- load.data("qin2012/mapping-orig.txt", "qin2012/otutable.txt")
+sort(colSums(ret$o), decreasing=T)
+ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o
+dim(m)
+head(m)
+dim(m)
+table(m$Diabetic)
+rownames(m)
+sort(rownames(m))
+write.mapping("qin2012/task-healthy-diabetes", m[m$Diabetic %in% c("Y", "N"), "Diabetic", drop=F])
+ret <- load.data("qin2014/mapping-orig.txt", "qin2014/otutable.txt")    sort(colSums(ret$o), decreasing=T)
+ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o
+dim(m)
+head(m)
+table(m$Cirrhotic)
+write.mapping("qin2014/task-healthy-cirrhosis", m[m$Cirrhotic %in% c("Cirrhosis", "Healthy"), "Diabetic", drop=F])
+write.mapping("qin2014/task-healthy-cirrhosis", m[m$Cirrhotic %in% c("Cirrhosis", "Healthy"), "Cirrhotic", drop=F])
+ret <- load.data("karlsson/mapping-orig.txt", "karlsson/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o#
+    write.mapping("karlsson/task-normal-diabetes.txt", m[m$Classification %in% c("NGT", "T2D"), "Classification", drop=F])    write.mapping("karlsson/task-impaired-diabetes.txt", m[m$Classification %in% c("IGT", "T2D"), "Classification", drop=F])# qin 2012 (diabetes)    ret <- load.data("qin2012/mapping-orig.txt", "qin2012/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o    write.mapping("qin2012/task-healthy-diabetes.txt", m[m$Diabetic %in% c("Y", "N"), "Diabetic", drop=F])# qin 2014 (cirrhosis)    ret <- load.data("qin2014/mapping-orig.txt.txt", "qin2014/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o)    m <- ret2$m    o <- ret2$o    write.mapping("qin2014/task-healthy-cirrhosis.txt", m[m$Cirrhotic %in% c("Cirrhosis", "Healthy"), "Cirrhotic", drop=F])
+ret <- load.data("david/mapping-orig.txt", "david/gg/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o, 100)     m <- ret2$m    o <- ret2$o
+ret <- load.data("david/mapping-orig.txt", "david/gg/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o, 100)     m <- ret2$m    o <- ret2$o
+head(m)
+m$SubjectFood
+table(m$SubjectFood)
+m$Day
+m[!is.na(m$Day),]
+m1 <- m[!is.na(m$Day),]
+m1[order(m1$SubjectFood, m1$Day), ]
+m1[order(m1$SubjectFood, m$Diet, m1$Day), ]
+m1[order(m1$SubjectFood, m1$Diet, m1$Day), ]
+unique(m1$SubjectFood)
+length(unique(m1$SubjectFood))
+?aggregate()
+m <- m[!is.na(m$Day),] # remove food #
+    subjects <- unique(m$SubjectFood)#
+    baseline <- m[m$Day < 0, ]    aggregate(baseline$Day, by=list(baseline$SubjectFood), FUN=max)
+class(m$Day)
+diet <- m[m$Day %in% 1:4,]     last.diet.day <- aggregate(diet$Day, by=list(diet$SubjectFood), FUN=max)
+last.diet.day
+m[m$SubjectFood=="11","Day"]
+sort(m[m$SubjectFood=="11","Day"])
+baseline.day <- aggregate(baseline$Day, by=list(baseline$SubjectFood, baseline$Diet), FUN=max)
+baseline.day
+baseline <- m[m$Day < 0, ]    baseline.day <- aggregate(baseline$Day, by=list(baseline$SubjectFood, baseline$Diet), FUN=max)    colnames(baseline.day) <- c("Subject", "Diet", "Day")#
+    diet <- m[m$Day %in% 1:4,]     last.diet.day <- aggregate(diet$Day, by=list(diet$SubjectFood, diet$Diet), FUN=max)    colnames(last.diet.day) <- c("Subject", "Diet", "Day")
+baseline.day
+last.diet.day
+ret <- load.data("david/mapping-orig.txt", "david/gg/otutable.txt")    sort(colSums(ret$o), decreasing=T)     ret2 <- filter.data(ret$m, ret$o, 100)     m <- ret2$m    o <- ret2$o    m <- m[!is.na(m$Day),] # remove food     m <- m[m$SubjectFood!="11",] # remove subject 11 because they appeared to dropped out#
+    subjects <- unique(m$SubjectFood)#
+    baseline <- m[m$Day < 0, ]    baseline.day <- aggregate(baseline$Day, by=list(baseline$SubjectFood, baseline$Diet), FUN=max)    colnames(baseline.day) <- c("Subject", "Diet", "Day")#
+    diet <- m[m$Day %in% 1:4,]     last.diet.day <- aggregate(diet$Day, by=list(diet$SubjectFood, diet$Diet), FUN=max)    colnames(last.diet.day) <- c("Subject", "Diet", "Day")
+last.diet.day
+baseline.day
+colnames(last.diet.day) <- c("SubjectFood", "Diet", "Day")
+m.last.diet <- merge(m, last.diet.day, by=colnames(last.diet.day))
+m.last.diet
+head(m)
+?merge
+m.last.diet <- merge(cbind(m,sample.id=rownames(m)), last.diet.day, by=colnames(last.diet.day))
+?merge
+m.last.diet
+m[m.last.diet$sample.id, "Diet", drop=F]
+write.mapping("david/task.txt", m[m.last.diet$sample.id, "Diet", drop=F])
+?pROC
