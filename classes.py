@@ -1,29 +1,17 @@
 import pandas as pd
 import numpy as np
-import kqc_custom
-
-
-from qiskit_optimization.algorithms import (
-    MinimumEigenOptimizer,
-    RecursiveMinimumEigenOptimizer,
-    SolutionSample,
-    OptimizationResultStatus,
-)
-from qiskit_optimization import QuadraticProgram
-from qiskit.visualization import plot_histogram
 from typing import List, Tuple
-import numpy as np
-
-import matplotlib.pyplot as plt
-
 import kqc_custom
-from qiskit import Aer,IBMQ
+
+from qiskit_optimization import QuadraticProgram
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.utils import check_random_state
+from qiskit_optimization import QuadraticProgram
+from qiskit import Aer
 from qiskit.utils import algorithm_globals, QuantumInstance
 from qiskit.algorithms import QAOA, NumPyMinimumEigensolver
-from qiskit_optimization import QuadraticProgram
-
-from sklearn.base import BaseEstimator, TransformerMixin
-
+from qiskit_optimization.algorithms import (
+    MinimumEigenOptimizer)
 
 def f_obj(Q,beta) : 
     return -1*np.matmul(np.matmul(beta.T,Q),beta)
@@ -32,21 +20,6 @@ def f_nabla(Q,beta) :
     return nabla_beta.values
 def l1_subgradient(beta) : return((beta>0)*1 - (beta<0)*1)
 
-
-def read_otu(task_dir, otu_dir, positive_value):
-    task = pd.read_csv(task_dir, '\t')
-    otutable = pd.read_csv(otu_dir, '\t')
-    samples = list(task['#SampleID'])
-    data = dict()
-    for sample in samples:
-        otu = list(otutable[sample])
-        otu.append(task.set_index('#SampleID').transpose()[sample][0])
-        data[sample]=otu
-    df = pd.DataFrame(data).transpose()
-    df.columns = df.columns.map(lambda x: 'OTU_'+str(x+1))
-    y = df["OTU_" + str(df.shape[1])].map(lambda x : 1 if x==positive_value else 0)
-    X = df.drop("OTU_" + str(df.shape[1]), axis=1)
-    return(X, y)
 
 class OrdinaryEig(BaseEstimator, TransformerMixin):  
     def __init__(self, r=2):
@@ -120,8 +93,7 @@ class BinaryEig(BaseEstimator, TransformerMixin):
         self.r = r
         self.k = k
 
-        # THIS IS WRONG! Parameters should have same name as attributes
-    
+
     def fit(self, M, y=None):
         """kernel matix, axis, hyperparmeter"""
         Q = -M
@@ -153,5 +125,97 @@ class BinaryEig(BaseEstimator, TransformerMixin):
         return self.coef_frame
     
     
+## Solver
+def qubo_qaoa(Q,beta,backend = Aer.get_backend("qasm_simulator")):
+    algorithm_globals.massive = True
+    p = Q.shape[0]
+    mod = QuadraticProgram("my problem")
+    linear = {"x"+str(i): beta[i] for i in range(p)}
+    quadratic = {("x"+str(i),"x"+str(j)): Q.values[i,j] for i in range(p) for j in range(p)}
+
+    for i in range(p) :
+        mod.binary_var(name="x"+str(i))
+
+    mod.minimize(linear=linear,quadratic=quadratic)
+    quantum_instance = QuantumInstance(backend)
+    mes = QAOA(quantum_instance=quantum_instance)
+    optimizer = MinimumEigenOptimizer(mes)
+    result = optimizer.solve(mod)
+    return([result,mod])
+
+def qubo_exact(Q,beta):
+    algorithm_globals.massive = True
+    p = Q.shape[0]
+    mod = QuadraticProgram("my problem")
+    linear = {"x"+str(i): beta[i] for i in range(p)}
+    quadratic = {("x"+str(i),"x"+str(j)): Q.values[i,j] for i in range(p) for j in range(p)}
+
+    for i in range(p) :
+        mod.binary_var(name="x"+str(i))
+
+    mod.minimize(linear=linear,quadratic=quadratic)
+    mes = NumPyMinimumEigensolver()
+    optimizer = MinimumEigenOptimizer(mes)
+    result = optimizer.solve(mod)
+    return([result,mod])
 
 
+# Sample_Generator
+
+def generate_independent_sample(n_samples=500, n_features=10, beta_coef =[4,3,2,2],epsilon=4, random_state=None):
+
+        rng = check_random_state(random_state)
+        if n_features < 4:
+            raise ValueError("`n_features` must be >= 4. "
+                             "Got n_features={0}".format(n_features))
+        # normally distributed features
+        X = rng.randn(n_samples, n_features)
+        # beta is a linear combination of informative features
+        n_informative = len(beta_coef)
+        beta = np.hstack((
+            beta_coef, np.zeros(n_features - n_informative)))
+        # cubic in subspace
+        y = np.dot(X, beta)
+        y += epsilon * rng.randn(n_samples)
+        return X, y
+
+def generate_dependent_sample(n_samples=500, n_features=10, beta_coef =[4,3,2,2],epsilon=4,covariance_parameter=1, random_state=None):
+
+        rng = check_random_state(random_state)
+        if n_features < 4:
+            raise ValueError("`n_features` must be >= 4. "
+                             "Got n_features={0}".format(n_features))
+
+        # normally distributed features
+
+        v = rng.normal(0, 0.4, (n_features, n_features))
+        mean = np.zeros(n_features)
+        cov = v @ v.T*covariance_parameter + 0.1 * np.identity(n_features)
+        X = rng.multivariate_normal(mean, cov, n_samples)
+
+        # beta is a linear combination of informative features
+        n_informative = len(beta_coef)
+        beta = np.hstack((
+            beta_coef, np.zeros(n_features - n_informative)))
+
+        # cubic in subspace
+        y = np.dot(X, beta)
+        y += epsilon * rng.randn(n_samples)
+
+        return X, y
+
+
+def read_otu(task_dir, otu_dir, positive_value):
+    task = pd.read_csv(task_dir, '\t')
+    otutable = pd.read_csv(otu_dir, '\t')
+    samples = list(task['#SampleID'])
+    data = dict()
+    for sample in samples:
+        otu = list(otutable[sample])
+        otu.append(task.set_index('#SampleID').transpose()[sample][0])
+        data[sample]=otu
+    df = pd.DataFrame(data).transpose()
+    df.columns = df.columns.map(lambda x: 'OTU_'+str(x+1))
+    y = df["OTU_" + str(df.shape[1])].map(lambda x : 1 if x==positive_value else 0)
+    X = df.drop("OTU_" + str(df.shape[1]), axis=1)
+    return(X, y)
